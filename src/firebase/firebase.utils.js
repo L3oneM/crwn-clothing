@@ -1,17 +1,19 @@
-import firebase from 'firebase/app'
-import 'firebase/firestore'
-import 'firebase/auth'
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
 
 const config = {
   apiKey: "AIzaSyDUNzjJBTb3R1RRXEKdhJORXTA0iQ12mGE",
-  authDomain: "crown-db-3face.firebaseapp.com",
-  databaseURL: "https://crown-db-3face.firebaseio.com",
-  projectId: "crown-db-3face",
-  storageBucket: "crown-db-3face.appspot.com",
-  messagingSenderId: "414898549228",
-  appId: "1:414898549228:web:49e2d9ff619c2a250b50c9",
-  measurementId: "G-H2RCNVJ3HF"
-}
+    authDomain: "crown-db-3face.firebaseapp.com",
+    databaseURL: "https://crown-db-3face.firebaseio.com",
+    projectId: "crown-db-3face",
+    storageBucket: "crown-db-3face.appspot.com",
+    messagingSenderId: "414898549228",
+    appId: "1:414898549228:web:49e2d9ff619c2a250b50c9",
+    measurementId: "G-H2RCNVJ3HF"
+};
+
+firebase.initializeApp(config);
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
@@ -38,15 +40,11 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
-firebase.initializeApp(config)
+export const auth = firebase.auth();
+export const firestore = firebase.firestore();
 
-export const auth = firebase.auth()
-export const firestore = firebase.firestore()
+const provider = new firebase.auth.GoogleAuthProvider();
+provider.setCustomParameters({ prompt: 'select_account' });
+export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
-const provider = new firebase.auth.GoogleAuthProvider() 
-
-provider.setCustomParameters({ prompt: 'select_account' })
-export const signInWithGoogle = () => auth.signInWithPopup(provider)
-
-export default firebase
-
+export default firebase;
